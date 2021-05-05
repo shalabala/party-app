@@ -1,0 +1,7 @@
+export const loginRoute:string="login"
+export const registerRoute:string="register"
+export const searchRoute:string="search"
+export const coworkerHierarchyRoute:string="hierarchy"
+export const companyDetailsRoute:string="company"
+export const coworkerDetailsRoute:string="coworker"
+export const coworkerEditRoute:string="edit"

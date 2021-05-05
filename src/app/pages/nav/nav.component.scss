@@ -1,0 +1,19 @@
+[mat-button] {
+  text-transform: capitalize;
+}
+
+.menuButton{
+  position: absolute;
+  right: 5px;
+}
+
+a[mat-button] {
+  font-size: x-large;
+}
+
+mat-toolbar {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 1000;
+}

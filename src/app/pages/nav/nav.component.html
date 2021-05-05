@@ -1,0 +1,33 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <a mat-button [routerLink]="[ '/' ]">
+        {{title}}
+      </a>
+      <button  mat-button *ngFor="let item of categories" [routerLink]="[item.route]" routerLinkActive="active">
+        {{item.text}}
+        <mat-icon>{{item.icon}}</mat-icon>
+      </button>
+      <span></span>
+      <button class="menuButton" *ngIf="displayMenu" mat-button [matMenuTriggerFor]="menu">
+        {{menuName}}
+        <mat-icon>arrow_drop_down</mat-icon>
+      </button>
+  
+      <mat-menu  #menu="matMenu">
+        <button mat-menu-item [routerLink]="[ '/profile' ]">
+          <mat-icon>person</mat-icon>
+          <span>Cég profil</span>
+        </button>
+        <button mat-menu-item disabled>
+          <mat-icon>settings</mat-icon>
+          <span>Beállítások</span>
+        </button>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>arrow_back</mat-icon>
+          <span>Kijelentkezés</span>
+        </button>
+      </mat-menu>
+  
+    </mat-toolbar-row>
+  
+  </mat-toolbar>

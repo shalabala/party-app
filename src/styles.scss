@@ -1,1 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/purple-green.css';
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family:
+    Roboto,
+    "Helvetica Neue",
+    sans-serif;
+  background: #303030;
+  color: white;
+}
+
+.topcenter {
+  margin-top: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: fit-content;
+  margin-top: 2px;
+}
+.loginRegisterCard{
+  margin-top: 15px;
+}
