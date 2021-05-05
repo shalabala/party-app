@@ -49,6 +49,8 @@ export class LoginComponent implements OnInit {
         }else{
           this.alertMessage=this.alertsList.user
         }
+      },(error)=>{
+        console.log(error)
       }
     );
   }

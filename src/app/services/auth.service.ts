@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { loginRoute, searchRoute } from '../shared/constants';
 import { User } from '../shared/model/user.model';
@@ -7,9 +8,12 @@ import { User } from '../shared/model/user.model';
   providedIn: 'root'
 })
 export class AuthService {
+  constructor(private fireAuth: AngularFireAuth) { }
+  
   private _user: User|null;
-  public get user(): User | null{
-    return this._user
+  public get user(): User{
+    //return this.fireAuth.user
+    return {userId: "Asd", companyName: "asd"}
   }
 
   navigateToLoginPageIfUserNotLoggedIn(router: Router) {
@@ -22,16 +26,12 @@ export class AuthService {
       router.navigateByUrl('/'+searchRoute)
     }
   }
-  login(email: string, password: string) : Promise<User | null> {
-    if(email==="email@email.hu"&&password==="12345678"){
-      this._user={userId:email, companyName:email}
-      return Promise.resolve(this.user)
-    }else return Promise.resolve(null)
+  login(email: string, password: string){
+    return this.fireAuth.signInWithEmailAndPassword(email,password)
   }
   logout() {
-    this._user=null;
+    this.fireAuth.signOut()
   }
   
 
-  constructor() { }
 }

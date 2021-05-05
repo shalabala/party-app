@@ -12,6 +12,18 @@ import { SearchPageModule } from './pages/party/searchpage/searchpage.module';
 import { SearchBarComponent } from './pages/party/searchbar/searchbar.component';
 import { SearchBarModule } from './pages/party/searchbar/searchbar.module';
 import { RegisterModule } from './pages/register/register.module';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/auth';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAN1kWDBWlSQa8vt9cbBDAhMYS8owF74e8",
+  authDomain: "company-personnel.firebaseapp.com",
+  projectId: "company-personnel",
+  storageBucket: "company-personnel.appspot.com",
+  messagingSenderId: "948137096278",
+  appId: "1:948137096278:web:e1089f16a4de60880e37f7"
+};
 
 @NgModule({
   declarations: [
@@ -24,12 +36,18 @@ import { RegisterModule } from './pages/register/register.module';
     LoginModule,
     FooterModule,
     SearchPageModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
     RegisterModule,
     SearchBarModule,
-    
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [AngularFireAuth,AngularFirestore],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+  constructor(){
+    
+  }
+}
