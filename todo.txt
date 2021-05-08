@@ -1,0 +1,3 @@
+legyen a keresősáv reactive 
+képfeltöltés
+edit átírás

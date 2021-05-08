@@ -1,0 +1,257 @@
+<h1 mat-dialog-title>Új munkatárs felvétele</h1>
+<div mat-dialog-content>
+  <div [formGroup]="form">
+    <mat-label class="mainCategory">
+      Általános adatok
+    </mat-label><br>
+    <mat-label>*Név:</mat-label>
+    <div formGroupName="name">
+      <mat-form-field class="narrowField">
+        <mat-label>
+          Előtag
+        </mat-label>
+        <input matInput formControlName="namePrefix">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>
+          *Családnév
+        </mat-label>
+        <input matInput formControlName="familyName">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>
+          *Kersztnevek
+        </mat-label>
+        <input matInput formControlName="givenNames">
+      </mat-form-field>
+      <mat-form-field class="wideField">
+        <mat-label>
+          *Megjelenítési név
+        </mat-label>
+        <input matInput formControlName="preferredName">
+      </mat-form-field>
+
+
+    </div>
+    <mat-label>
+      Kép
+    </mat-label><br>
+    <mat-form-field class="wideField">
+      <mat-label>
+        Kép
+      </mat-label>
+      <input matInput formControlName="image">
+    </mat-form-field><br>
+    <mat-label>
+      *Nem:
+    </mat-label><br>
+    <mat-radio-group formControlName="gender">
+      <mat-radio-button value="male">
+        Férfi
+      </mat-radio-button>
+      <mat-radio-button value="female">
+        Nő
+      </mat-radio-button>
+      <mat-radio-button value="other">
+        Egyéb
+      </mat-radio-button>
+    </mat-radio-group><br><br>
+    <mat-label>
+      *Születés:
+    </mat-label>
+    <div formGroupName="birth">
+      <mat-form-field>
+        <mat-label>
+          *Ország
+        </mat-label>
+        <input matInput formControlName="country">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>
+          *Város
+        </mat-label>
+        <input matInput formControlName="city">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>
+          *Születési idő
+        </mat-label>
+        <input matInput type="date" formControlName="date">
+      </mat-form-field>
+    </div>
+    <mat-label>
+      *Lakcím:
+    </mat-label><br>
+    <mat-form-field>
+      <mat-label>
+        *Lakcím
+      </mat-label>
+      <input matInput formControlName="address">
+    </mat-form-field><br>
+    <mat-label>
+      Házzassági állapot
+    </mat-label><br>
+    <mat-radio-group formControlName="maritalStatus">
+      <mat-radio-button value="married">
+        Házas
+      </mat-radio-button>
+      <mat-radio-button value="single">
+        Egyedülálló
+      </mat-radio-button>
+      <mat-radio-button value="divorced">
+        Elvált
+      </mat-radio-button>
+    </mat-radio-group><br><br>
+    <mat-label>
+      *Nemzetiség:
+    </mat-label><br>
+    <mat-form-field>
+      <mat-label>
+        *Nemzetiség:
+      </mat-label>
+      <input matInput formControlName="nationality">
+    </mat-form-field><br><br>
+
+
+    <mat-label class="mainCategory">
+      Cégnél betöltött szerep
+    </mat-label><br>
+    <mat-form-field class="wideField">
+      <mat-label>
+        *Poszt
+      </mat-label>
+      <input matInput formControlName="titleAtCompany">
+    </mat-form-field><br>
+    <mat-label>Képességek</mat-label>
+    <button (click)="add(skills)" mat-button>
+      <mat-icon>add</mat-icon>
+    </button>
+    <div formArrayName="skills">
+    <div *ngFor="let skill of skills.controls; let i=index">
+      <mat-form-field >
+        <mat-label>
+          Képesség {{i+1}}.
+        </mat-label>
+        <input matInput [formControlName]="i">
+      </mat-form-field>
+      <button (click)="remove(skills, i)" mat-button>
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+    </div>
+    <mat-label>Nyelvtudás</mat-label>
+    <button (click)="add(languages)" mat-button>
+      <mat-icon>add</mat-icon>
+    </button>
+    <div formArrayName="languageAbilities">
+      <div *ngFor="let language of languages.controls; let i=index">
+      <mat-form-field >
+        <mat-label>
+          Nyelv {{i+1}}.
+        </mat-label>
+        <input matInput [formControlName]="i">
+      </mat-form-field>
+      <button (click)="remove(languages, i)" mat-button>
+        <mat-icon>delete</mat-icon>
+      </button><br>
+    </div>
+    </div><br>
+    <mat-label class="mainCategory">
+      Egyéb adatok
+    </mat-label><br>
+    <mat-label>Fogyatékosságok</mat-label>
+    <button (click)="add(disabilities)" mat-button>
+      <mat-icon>add</mat-icon>
+    </button>
+    <div formArrayName="disabilities">
+      <div *ngFor="let d of disabilities.controls; let i=index">
+      <mat-form-field >
+        <mat-label>
+          Fogyatékosság {{i+1}}.
+        </mat-label>
+        <input matInput [formControlName]="i">
+      </mat-form-field><button (click)="remove(disabilities, i)" mat-button>
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+    </div>
+    <mat-label>*Elérhetőségek</mat-label>
+    <button (click)="add(contacts)" mat-button>
+      <mat-icon>add</mat-icon>
+    </button>
+    <div formArrayName="contacts">
+      <div *ngFor="let d of contacts.controls; let i=index" [formGroupName]="i">
+        <mat-form-field class="mediumField">
+          <mat-label>
+            Leírás
+          </mat-label>
+          <input matInput formControlName="type">
+        </mat-form-field>
+        <mat-form-field class="mediumField">
+          <mat-label>
+            Elérhetőség
+          </mat-label>
+          <input matInput formControlName="contact">
+        </mat-form-field>
+        <button (click)="remove(contacts, i)" mat-button>
+          <mat-icon>delete</mat-icon>
+        </button><br>
+      </div>
+    </div>
+    <mat-label>*Kifizetési lehetőségek</mat-label>
+    <button (click)="add(bankAccounts)" mat-button>
+      <mat-icon>add</mat-icon>
+    </button>
+    <div formArrayName="bankAccounts">
+
+      <div *ngFor="let d of bankAccounts.controls; let i=index" [formGroupName]="i">
+        <mat-form-field class="mediumField">
+          <mat-label>
+            Név
+          </mat-label>
+          <input matInput formControlName="name">
+        </mat-form-field>
+        <mat-form-field class="mediumField">
+          <mat-label>
+            Bankszámla szám
+          </mat-label>
+          <input matInput formControlName="number">
+        </mat-form-field>
+        <button (click)="remove(bankAccounts, i)" mat-button>
+          <mat-icon>delete</mat-icon>
+        </button><br>
+      </div>
+    </div>
+    <mat-label>Adókedvezmények</mat-label>
+    <button (click)="add(taxExemptions)" mat-button>
+      <mat-icon>add</mat-icon>
+    </button>
+    <div formArrayName="taxExemptions">
+
+      <div *ngFor="let d of taxExemptions.controls; let i=index" [formGroupName]="i">
+        <mat-form-field class="mediumField">
+          <mat-label>
+            Ok
+          </mat-label>
+          <input matInput formControlName="reason">
+        </mat-form-field>
+        <mat-form-field class="mediumField">
+          <mat-label>
+            Százalék
+          </mat-label>
+          <input matInput formControlName="percent">
+        </mat-form-field>
+        <button mat-button (click)="remove(taxExemptions, i)">
+          <mat-icon>delete</mat-icon>
+        </button><br>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+<div mat-dialog-action> 
+  <button class="dialogButton" mat-button (click)="cancel()">Mégse</button>
+  <button class="dialogButton" mat-button (click)="save()">Mentés</button>
+</div>
+

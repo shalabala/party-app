@@ -9,7 +9,8 @@ import { FooterModule } from './pages/footer/footer.module';
 
 import { LoginModule } from './pages/login/login.module';
 import { SearchPageModule } from './pages/party/searchpage/searchpage.module';
-import { SearchBarComponent } from './pages/party/searchbar/searchbar.component';
+
+import {MatDialog, MatDialogModule, MatDialogRef} from '@angular/material/dialog'; 
 import { SearchBarModule } from './pages/party/searchbar/searchbar.module';
 import { RegisterModule } from './pages/register/register.module';
 import { AngularFireModule } from '@angular/fire';
@@ -41,9 +42,10 @@ const firebaseConfig = {
     AngularFirestoreModule,
     RegisterModule,
     SearchBarModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatDialogModule
   ],
-  providers: [AngularFireAuth,AngularFirestore],
+  providers: [AngularFireAuth,AngularFirestore,MatDialog],
   bootstrap: [AppComponent]
 })
 export class AppModule { 

@@ -1,1 +1,5 @@
-<p>list works!</p>
+<div class="flex container">
+    <app-party-card *ngFor="let party of parties" 
+[party]="party" (delete)="deleteCallback($event)" (details)="detailsCallback($event)" >
+
+</app-party-card></div>

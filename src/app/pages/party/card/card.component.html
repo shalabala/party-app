@@ -1,1 +1,22 @@
-<p>card works!</p>
+<mat-card class="partyCard">
+  <mat-card-header>
+    <mat-card-title>
+      {{party.formattedName}}
+    </mat-card-title>
+    <mat-card-subtitle>
+      {{party.title}}
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <img *ngIf="party.externalReferences" [src]="party.externalReferences[0]" [alt]="party.legalName">
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button (click)="onDelete($event)">
+      DELETE
+    </button>
+    <button mat-button (click)="onDetails($event)">
+      DETAILS
+    </button>
+  </mat-card-actions>
+
+</mat-card>

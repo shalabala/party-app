@@ -1,36 +1,46 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { loginRoute, searchRoute } from '../shared/constants';
+import { loginRoute, mainPage, registerRoute, searchRoute } from '../shared/constants';
 import { User } from '../shared/model/user.model';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private fireAuth: AngularFireAuth) { }
+  constructor(private fireAuth: AngularFireAuth, private router: Router) {
+    fireAuth.onAuthStateChanged((user)=>{
+      if(user){
+        this._user={
+          userId:user.uid,
+          email:user.email
+        }
+        if(router.url.endsWith(loginRoute)||router.url.endsWith(registerRoute)){
+          router.navigateByUrl('/'+mainPage)
+        }
+      }else{
+        this._user=null
+        if(!(router.url.endsWith(loginRoute)||router.url.endsWith(registerRoute))){
+          router.navigateByUrl('/'+loginRoute)
+        }
+      }
+    })
+   }
   
-  private _user: User|null;
-  public get user(): User{
-    //return this.fireAuth.user
-    return {userId: "Asd", companyName: "asd"}
+  private _user?:User 
+  public get user(){
+    return this._user
   }
-
-  navigateToLoginPageIfUserNotLoggedIn(router: Router) {
-    if(this.user===null){
-      router.navigateByUrl('/'+loginRoute)
-    }
-  }
-  navigateToMainPageIfUserLoggedIn(router : Router){
-    if(this.user!==null){
-      router.navigateByUrl('/'+searchRoute)
-    }
-  }
+ 
   login(email: string, password: string){
     return this.fireAuth.signInWithEmailAndPassword(email,password)
   }
+  createUserWithEmailAndPassword(email: string, password: string){
+    return this.fireAuth.createUserWithEmailAndPassword(email,password)
+  }
   logout() {
-    this.fireAuth.signOut()
+    return this.fireAuth.signOut()
   }
   
 

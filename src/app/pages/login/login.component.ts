@@ -42,17 +42,17 @@ export class LoginComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    this.authService.login(this.form.value.email, this.form.value.password).then(
-      result => {
-        if(result!==null){
-          this.navTo('/'+searchRoute)
+    this.authService.login(this.form.value.email, this.form.value.password)/*
+      .then((userCredential) => {
+        this.router.navigateByUrl('/'+searchRoute)        
+      })*/
+      .catch((error) => {
+        if(error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password'){
+          this.alertMessage="Rossz email vagy jelszó"
         }else{
-          this.alertMessage=this.alertsList.user
+          this.alertMessage="Valami hiba történt, kérem próbálja újra később"
         }
-      },(error)=>{
-        console.log(error)
-      }
-    );
-  }
+      });
+    }
 
 }

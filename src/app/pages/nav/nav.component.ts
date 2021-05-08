@@ -21,7 +21,7 @@ export class NavComponent implements OnInit {
     return this.toolbarContent.getIfDisplayMenu(this.router.url)
   }
   get menuName(){
-    return this.authService?.user?.companyName
+    return "Menu"//TODO
   }
   constructor(private toolbarContent: ToolbarContentService, private router : Router, private authService: AuthService) { }
 
@@ -29,7 +29,5 @@ export class NavComponent implements OnInit {
   }
   logout(){
     this.authService.logout()
-    this.router.navigateByUrl('/'+loginRoute)
-
   }
 }

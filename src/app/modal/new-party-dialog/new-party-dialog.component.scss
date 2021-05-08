@@ -1,0 +1,25 @@
+mat-form-field{
+    margin-left: 5px;
+}
+.narrowField{
+    max-width: 7%;
+}
+.mediumField{
+    max-width: 40%;
+}
+.wideField{
+    min-width: 70%;
+}
+.subcategory{
+    font-size: medium;
+
+}
+.mainCategory{
+    font-size: large;
+}
+mat-radio-button{
+    margin-right: 4px;
+}
+[mat-dialog-content]{
+    max-height:unset ;
+}

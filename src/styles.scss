@@ -27,3 +27,21 @@ body {
 .loginRegisterCard{
   margin-top: 15px;
 }
+.alert {
+  text-align: center;
+  margin-left: -16px;
+  margin-right:  -16px;
+  color: rgb(185, 53, 36);
+  background-color: rgb(245, 219, 215);
+  border: 1px solid rgb(245, 176, 182);
+  height: fit-content;
+  line-height: 20px;
+}
+.container{
+  width: 100%;
+
+}
+.flex{
+  display: flex;
+  flex-wrap: wrap;
+}

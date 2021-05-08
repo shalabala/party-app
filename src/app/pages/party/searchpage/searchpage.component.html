@@ -1,2 +1,3 @@
-<app-searchbar></app-searchbar>
-<app-list></app-list>
+<app-party-searchbar (searchTerm)="onSearch($event)"></app-party-searchbar>
+<app-party-list [parties]="parties" [detailsCallback]="onDetails" [deleteCallback]="onDelete"></app-party-list>
+<button (click)="testDialog()">TEST DIALOG</button>

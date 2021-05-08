@@ -11,8 +11,6 @@ export class HierarchyPageComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router) { }
 
-  ngOnInit(): void {
-    this.authService.navigateToLoginPageIfUserNotLoggedIn(this.router)
-  }
+  ngOnInit(): void { }
 
 }

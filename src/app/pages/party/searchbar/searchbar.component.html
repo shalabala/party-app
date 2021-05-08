@@ -1,1 +1,18 @@
-<p>searchbar works!</p>
+<mat-toolbar>
+  <mat-toolbar-row>
+    <form [formGroup]="searchForm" (ngSubmit)="search()" >
+        <mat-label>Név: </mat-label>
+
+      <mat-form-field>
+        <input matInput formControlName="nameField">
+      </mat-form-field>
+      <mat-label>Beosztás: </mat-label>
+
+      <mat-form-field>
+      <input matInput formControlName="titleField">
+    </mat-form-field>
+      <button type="submit"  (click)="search()" mat-button>Keres</button>
+
+    </form>
+  </mat-toolbar-row>
+</mat-toolbar>

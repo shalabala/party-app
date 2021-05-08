@@ -28,11 +28,7 @@ export class RegisterComponent implements OnInit {
   });
 
   alertMessage = '';
-  alertsList: any = {
-    user:  'Ezzel az emaillel már regisztráltak!',
-    server:  'A szolgáltatás nem elérhető.',
-    false: ''
-  };
+  
 
   checkPasswords(control: AbstractControl) {
     const password = control?.parent?.get('password')?.value 
@@ -47,7 +43,20 @@ export class RegisterComponent implements OnInit {
   register(): void {
     if (this.form.invalid) {
       return;
-    
-  }
+    }
+    this.authService.createUserWithEmailAndPassword(this.form.value.email,this.form.value.password)
+      .then((userCredential) => {
+        this.router.navigateByUrl('/'+loginRoute)
+      })
+      .catch((error) => {
+        if(error.code=='auth/email-already-in-use'){
+          this.alertMessage="Ezzel az emaillel már regisztráltak!"
 
+        }else if(error.code=='auth/invalid-email'){
+          this.alertMessage="Ezz az email nem valid!"
+          
+        }else{
+          this.alertMessage="Valami baj történt, próbálja meg később"
+        }
+      });
 }}
