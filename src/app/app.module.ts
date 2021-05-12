@@ -16,6 +16,7 @@ import { RegisterModule } from './pages/register/register.module';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/auth';
+import { DetailsModule } from './pages/details/details.module';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAN1kWDBWlSQa8vt9cbBDAhMYS8owF74e8",
@@ -37,6 +38,7 @@ const firebaseConfig = {
     LoginModule,
     FooterModule,
     SearchPageModule,
+    DetailsModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,

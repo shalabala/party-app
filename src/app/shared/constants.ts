@@ -4,11 +4,10 @@ import { PartyState } from "./model/party.state"
 export const loginRoute:string="login"
 export const registerRoute:string="register"
 export const searchRoute:string="search"
-export const coworkerHierarchyRoute:string="hierarchy"
-export const companyDetailsRoute:string="company"
-export const coworkerDetailsRoute:string="coworker"
-export const coworkerEditRoute:string="edit"
-export const mainPage:string=searchRoute;
+export const coworkerDetailsRoute:string="details"
+export function unlocalizedNameFormatter(prefix: string, familyName: string, givenNames: string) {
+    return prefix+" "+familyName+" "+givenNames
+}
 
 export const testParties: Party[]=[
     {

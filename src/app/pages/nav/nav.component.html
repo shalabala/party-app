@@ -1,7 +1,7 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row>
-      <a mat-button [routerLink]="[ '/' ]">
-        {{title}}
+      <a mat-button [routerLink]="[ '/'+title.route ]">
+        {{title.text}}
       </a>
       <button  mat-button *ngFor="let item of categories" [routerLink]="[item.route]" routerLinkActive="active">
         {{item.text}}

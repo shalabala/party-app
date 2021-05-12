@@ -1,0 +1,42 @@
+<div class="topcenter">
+  <mat-card>
+    <mat-label>Megjelenítési név</mat-label><mat-label>{{party.formattedName}}</mat-label><br>
+    <mat-label>Teljes név</mat-label><mat-label>{{party.fullName}}</mat-label><br>
+    <mat-label>Poszt</mat-label><mat-label>{{party.title}}</mat-label><br>
+    <mat-label>Lakcím:</mat-label><mat-label>{{party.location}}</mat-label><br>
+    <mat-label>Születési dátum:</mat-label><mat-label>{{party.birthDate}}</mat-label><br>
+    <mat-label>Születési ország:</mat-label><mat-label>{{party.countryOfBirth}}</mat-label><br>
+    <mat-label>Születési dátum:</mat-label><mat-label>{{party.placeOfBirth}}</mat-label><br>
+    <mat-label>Nemzetiség:</mat-label><mat-label>{{party.nationality}}</mat-label><br>
+    <mat-label>Nem:</mat-label><mat-label>{{party.gender}}</mat-label><br>
+    <mat-label>Házassági állapot:</mat-label><mat-label>{{party.maritalStatus}}</mat-label><br>
+    <mat-label>Képességek:</mat-label><br>
+    <div *ngFor="let skill of party.skills">
+        <mat-label>{{skill}}</mat-label>
+    </div>
+    <mat-label>Nyelvtudás:</mat-label><br>
+    <div *ngFor="let language of party.languageAbilities">
+        <mat-label>{{language}}</mat-label>
+    </div>
+    <mat-label>Fogyatékosság:</mat-label><br>
+    <div *ngFor="let disability of party.disabilities">
+        <mat-label>{{disability}}</mat-label>
+    </div>
+    <mat-label>Elérhetőségek:</mat-label><br>
+    <div *ngFor="let contact of party.contactMediums">
+        <mat-label>{{contact.type}}</mat-label>
+        <mat-label>{{contact.contact}}</mat-label>
+    </div>
+    <mat-label>Kifizetési lehetőségek:</mat-label><br>
+    <div *ngFor="let account of party.creditProfiles">
+        <mat-label>{{account.name}}</mat-label>
+        <mat-label>{{account.account}}</mat-label>
+    </div>
+    <mat-label>Adó kedvezmények:</mat-label><br>
+    <div *ngFor="let exemption of party.taxExemptions">
+        <mat-label>{{exemption.reason}}</mat-label>
+        <mat-label>{{exemption.value}}%</mat-label>
+    </div>
+    
+  </mat-card>
+</div>

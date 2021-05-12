@@ -1,9 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { unlocalizedNameFormatter } from 'src/app/shared/constants';
+import { ContactMedium } from 'src/app/shared/model/contact.medium.model';
+import { CreditProfile } from 'src/app/shared/model/credit.profile';
 import { Party } from 'src/app/shared/model/party.model';
 import { PartyState } from 'src/app/shared/model/party.state';
+import { TaxExemption } from 'src/app/shared/model/tax.exemption';
 import {v4 as uuidv4} from 'uuid';
 
 @Component({
@@ -54,7 +59,7 @@ export class NewPartyDialogComponent implements OnInit {
   private newTaxExemption(){
     return new FormGroup({
       reason: new FormControl(''),
-      percent: new FormControl(''),
+      percent: new FormControl('0',[Validators.pattern("\\d*"),Validators.min(0),Validators.max(100)]),
     })
   }
   private newContact(){
@@ -81,7 +86,37 @@ export class NewPartyDialogComponent implements OnInit {
     return this.form.get('taxExemptions') as FormArray
 
   }
+  public get nameFormatter(){
+    return unlocalizedNameFormatter
+    //TODO could be localized
+  }
+  
+  preferredNameEdited=false
+  setPeferredName(preferredName, prefix, familyName, givenNames){
+    if(!preferredName.touched){
+      preferredName.setValue(this.nameFormatter(prefix.value,familyName.value,givenNames.value))
+    }
+  }
+  subscriptions: Subscription[]=[]
   ngOnInit(): void {
+    let names=this.form.get("name")
+    let prefix=names.get("namePrefix")
+    let givenNames=names.get("givenNames")
+    let familyName=names.get("familyName")
+    let preferredName=names.get("preferredName")
+
+    this.subscriptions.push(
+      prefix.valueChanges.subscribe((v)=>this.setPeferredName(preferredName,prefix,familyName,givenNames)),
+      givenNames.valueChanges.subscribe((v)=>this.setPeferredName(preferredName,prefix,familyName,givenNames)),
+      familyName.valueChanges.subscribe((v)=>this.setPeferredName(preferredName,prefix,familyName,givenNames)),
+    )
+
+
+  }
+  ngOnDestroy(){
+    for(let s of this.subscriptions){
+      s.unsubscribe()
+    }
 
   }
 
@@ -97,62 +132,107 @@ export class NewPartyDialogComponent implements OnInit {
     this.addLanguages(p)
     this.addSkills(p)
     this.addTaxExemptions(p)
+    this.dialogRef.close(p)
   }
   addTaxExemptions(p: Party) {
-    throw new Error('Method not implemented.');
+    for( let te of this.taxExemptions.controls){
+      let exemption: TaxExemption= {
+        reason:te.value.reason,
+        value: parseInt(te.value.percent)
+      }
+      if(exemption.reason!=""){
+        p.taxExemptions.push(exemption)
+      }
+    }
   }
   addSkills(p: Party) {
-    throw new Error('Method not implemented.');
+    for( let skillControl of this.skills.controls){
+      let skill=skillControl.value
+      if(skill!=""){
+        p.skills.push(skill)
+      }
+    }
   }
   addLanguages(p: Party) {
-    throw new Error('Method not implemented.');
+    for( let languageControl of this.languages.controls){
+      let language=languageControl.value
+      if(language!=""){
+        p.languageAbilities.push(language)
+      }
+    }
   }
   addNames(p: Party) {
-    throw new Error('Method not implemented.');
+    let names=this.form.value.name
+    p.fullName=this.nameFormatter(names.namePrefix,names.familyName,names.givenNames)
+    p.legalName=p.fullName
+
   }
   addDisabilities(p: Party) {
-    throw new Error('Method not implemented.');
+    for( let disabilityControl of this.disabilities.controls){
+      let disablitiy=disabilityControl.value
+      if(disablitiy!=""){
+        p.disabilities.push(disablitiy)
+      }
+    }
   }
   addBankAccounts(p: Party) {
-    throw new Error('Method not implemented.');
+    for( let accountControl of this.bankAccounts.controls){
+      let account: CreditProfile= {
+        name:accountControl.value.name,
+        account:accountControl.value.number
+      }
+      if(account.name!=""||account.account!=""){
+        p.creditProfiles.push(account)
+      }
+    }
   }
   addContacts(p: Party) {
-    //for(let c of)
+    for( let contactControl of this.contacts.controls){
+      let contact: ContactMedium= {
+        name:"",//TODO?
+        type:contactControl.value.type,
+        contact:contactControl.value.contact,
+      }
+      if(contact.type!=""||contact.contact!=""){
+        p.contactMediums.push(contact)
+      }
+    }
   }
   createNewParty(): Party{
+    let values=this.form.value
     return {
-      aristrocraticTitle:this.form.value.name.namePrefix,
-      birthDate:new Date( this.form.value.birth.birthDate),
+      aristrocraticTitle:values.name.namePrefix,
+      birthDate:new Date( values.birth.date),
       characteristics:[""],
-      contactMediums:[],//TODO
-      countryOfBirth:this.form.value.birth.countryOfBirth,
-      creditProfiles:[],//TODO
+      contactMediums:[],
+      countryOfBirth:values.birth.country,
+      creditProfiles:[],
       deathDate:null,
-      disabilities:[],//TODo
-      externalReferences:[this.form.value.image],
-      familyName:this.form.value.name.familyName,
-      formattedName:this.form.value.name.preferredName,
-      fullName:"",//TODO
-      gender:this.form.value.gender,
+      disabilities:[],
+      externalReferences:[values.image],
+      familyName:values.name.familyName,
+      formattedName:values.name.preferredName,
+      fullName:"",
+      gender:values.gender,
       generation:"",
-      givenName:"",//TODO
+      givenName:values.name.givenNames,
       href: this.auth.user.userId,
       id:uuidv4(),
       identifications:[],
-      languageAbilities:[],//TODO,
-      legalName:"",//TODO
-      location:this.form.value.address ,
-      maritalStatus: this.form.value.maritalStatus,
-      middleName: "",//TODO
-      nationality: this.form.value.nationality,
-      otherNames: [],//TODO
-      placeOfBirth: this.form.value.birth.placeOfBirth,
-      preferredGivenName: "",//TODO
+      languageAbilities:[],
+      legalName:"",
+      location:values.address ,
+      maritalStatus: values.maritalStatus,
+      middleName: "",
+      nationality: values.nationality,
+      otherNames: [],
+      placeOfBirth: values.birth.city,
+      preferredGivenName: "",
       relatedParties: [],
-      skills: [],//TODO
+      skills: [],
       status:PartyState.VALIDATED,
-      taxExemptions:[],//TODO
-      title:this.form.value.titleAtCompany
+      taxExemptions:[],
+      title:values.titleAtCompany
   }
   }
   cancel() {

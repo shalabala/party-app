@@ -14,7 +14,7 @@ export class NavComponent implements OnInit {
   get categories():ToolbarButtonDescription[]{
     return this.toolbarContent.getButtonDescriptors(this.router.url)
   }
-  get title():string{
+  get title():ToolbarButtonDescription{
     return this.toolbarContent.getTitle(this.router.url)
   }
   get displayMenu(): boolean{

@@ -1,37 +1,39 @@
 import { ContactMedium } from "./contact.medium.model";
+import { CreditProfile } from "./credit.profile";
 import { PartyState } from "./party.state";
+import { TaxExemption } from "./tax.exemption";
 
 export interface Party{
-    id: String,
-    href: String,
-    aristrocraticTitle: String,
+    id: string,
+    href: string,
+    aristrocraticTitle: string,
     birthDate: Date,
-    countryOfBirth: String,
+    countryOfBirth: string,
     deathDate?: Date,
-    familyName: String,
-    formattedName: String,//display name
-    fullName: String,
-    gender: String,
-    generation:String,
-    givenName: String,
-    legalName: String,
-    location: String,
-    maritalStatus: String,
-    middleName?: String,
-    nationality: String,
-    placeOfBirth: String,
-    preferredGivenName: String,
-    title: String,//company title
+    familyName: string,
+    formattedName: string,//display name
+    fullName: string,
+    gender: string,
+    generation:string,
+    givenName: string,
+    legalName: string,
+    location: string,
+    maritalStatus: string,
+    middleName?: string,
+    nationality: string,
+    placeOfBirth: string,
+    preferredGivenName: string,
+    title: string,//company title
     status:  PartyState,
-    languageAbilities: String[],
-    creditProfiles: String[],
-    disabilities:String[],
-    externalReferences: String[],//[0]=image
-    otherNames: String[],
-    characteristics: String[],
-    skills: String[],
-    relatedParties: String[],
+    languageAbilities: string[],
+    creditProfiles: CreditProfile[],
+    disabilities:string[],
+    externalReferences: string[],//[0]=image
+    otherNames: string[],
+    characteristics: string[],
+    skills: string[],
+    relatedParties: string[],
     contactMediums:ContactMedium[],
-    taxExemptions: String[]
-    identifications: String[]
+    taxExemptions: TaxExemption[]
+    identifications: string[]
 }

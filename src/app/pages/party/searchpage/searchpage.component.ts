@@ -14,7 +14,8 @@ import { Party } from 'src/app/shared/model/party.model';
 export class SearchPageComponent implements OnInit {
   parties=testParties
   fullParties=testParties
-  constructor(private router: Router, private authService: AuthService, private matDialog: MatDialog) { }
+  lastSearch=[]
+  constructor( private matDialog: MatDialog) { }
 
   ngOnInit(): void {
   }
@@ -28,6 +29,7 @@ export class SearchPageComponent implements OnInit {
   }
 
   onSearch(terms:string[]){
+    this.lastSearch=terms
     let matching=[]
     for (const item of this.fullParties) {
       if(item.fullName.toLocaleLowerCase().includes(terms[0].toLocaleLowerCase())
@@ -41,6 +43,10 @@ export class SearchPageComponent implements OnInit {
       height:"50%",
       width:"50%",
     });
+    dRef.afterClosed().subscribe(result=>{
+      this.fullParties.push(result)
+      this.onSearch(this.lastSearch)
+    })
 
   }
 }

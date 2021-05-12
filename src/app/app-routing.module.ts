@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { DetailsComponent } from './pages/details/details.component';
 import { LoginComponent } from './pages/login/login.component';
-import { HierarchyPageComponent } from './pages/party/hierarchy-page/hierarchy-page.component';
 import { SearchPageComponent } from './pages/party/searchpage/searchpage.component';
 import { RegisterComponent } from './pages/register/register.component';
-import { coworkerHierarchyRoute, loginRoute, registerRoute, searchRoute } from './shared/constants';
+import { coworkerDetailsRoute, loginRoute, registerRoute, searchRoute } from './shared/constants';
 
 const routes: Routes = [
   {path: loginRoute, component: LoginComponent},
   {path: searchRoute, component: SearchPageComponent},
   {path: registerRoute, component: RegisterComponent},
-  {path: coworkerHierarchyRoute, component: HierarchyPageComponent},
   {path: '', redirectTo: searchRoute,pathMatch:'full'},
+  {path: coworkerDetailsRoute, component: DetailsComponent}
 ];
 
 @NgModule({

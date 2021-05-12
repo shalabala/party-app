@@ -16,10 +16,20 @@ mat-form-field{
 }
 .mainCategory{
     font-size: large;
+    margin-top: 5px;
+    margin-bottom: 10px;
 }
 mat-radio-button{
     margin-right: 4px;
 }
 [mat-dialog-content]{
     max-height:unset ;
+}
+.grouping{
+    border-radius: 5px;
+    border: 1px solid black ;
+    box-shadow: 5px 10px rgb(47, 46, 46);
+    padding: 6px;
+    margin-top: 5px;
+    margin-bottom: 15px;
 }
