@@ -1,5 +1,5 @@
 <div class="flex container">
-    <app-party-card *ngFor="let party of parties" 
+    <app-party-card *ngFor="let party of parties | async" 
 [party]="party" (delete)="deleteCallback($event)" (details)="detailsCallback($event)" >
 
 </app-party-card></div>

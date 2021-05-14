@@ -1,0 +1,36 @@
+.subCategory{
+    position: relative;
+    left: 20px;
+    width: fit-content;
+}
+
+img {
+    width: 80%;
+    height: auto;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+mat-card{
+    width: 94%;
+    margin-left: 3%;
+    margin-right: 3%;
+}
+
+.title{
+    font-style: italic;
+    font-size: large;
+}
+.value{
+    font-size: large;
+}
+@media only screen and (min-width: 768px) {
+    mat-card{
+        width: fit-content;
+        margin: auto;
+    }
+    img {
+        width: 300px;
+        height: auto;
+        margin: auto;
+    }
+}

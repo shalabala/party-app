@@ -34,6 +34,9 @@ export class AuthService {
   public get user() {
     return this._user
   }
+  public get userObservable(){
+    return this.fireAuth.user
+  }
 
   checkIfPageAuthorized() {
     if (!(this.router.url.endsWith(loginRoute) || this.router.url.endsWith(registerRoute)) && this.user == null) {

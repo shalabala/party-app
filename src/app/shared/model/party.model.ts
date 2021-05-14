@@ -5,7 +5,7 @@ import { TaxExemption } from "./tax.exemption";
 
 export interface Party{
     id: string,
-    href: string,
+    href: string, //company id
     aristrocraticTitle: string,
     birthDate: Date,
     countryOfBirth: string,

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { SearchPattern } from '../searchpage/searchpage.component';
 
 @Component({
   selector: 'app-party-searchbar',
@@ -7,7 +8,7 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./searchbar.component.scss']
 })
 export class SearchBarComponent implements OnInit {
-  @Output() searchTerm=new EventEmitter<string[]>()
+  @Output() searchTerm=new EventEmitter<SearchPattern>()
   searchForm=new FormGroup({
     nameField: new FormControl(''),
     titleField:new FormControl('')
@@ -17,7 +18,7 @@ export class SearchBarComponent implements OnInit {
   ngOnInit(): void {
   }
   search(){
-    this.searchTerm.emit([this.searchForm.value.nameField,this.searchForm.value.titleField])
+    this.searchTerm.emit({title:this.searchForm.value.nameField,name:this.searchForm.value.titleField})
   }
 
 }

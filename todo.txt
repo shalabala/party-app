@@ -1,3 +1,16 @@
-legyen a keresősáv reactive 
+LEGKOZELEBB:
+ az edit page-t asyncosítani, megszabadulni a reactive formstól
+ a megjelenítésí névnél ki kell találni hogy hogyan legyen
+ meggyőződni a működésréről, hibákat kijavítani
+
+edit megvalósítás
+legyen a keresősáv reactive
+url/?id= a details pagen
+törlés
+mobile first refactor
+statikus stringek lokalizálása, error handling
+auth guard
+
+deploys
+
 képfeltöltés
-edit átírás

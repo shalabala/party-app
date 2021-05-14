@@ -1,51 +1,76 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { NewPartyDialogComponent } from 'src/app/modal/new-party-dialog/new-party-dialog.component';
 import { AuthService } from 'src/app/services/auth.service';
-import { testParties } from 'src/app/shared/constants';
+import { PartyService } from 'src/app/services/party.service';
 import { Party } from 'src/app/shared/model/party.model';
+import { last, map, mergeMap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
+import { combineLatest } from 'rxjs';
+import { Router } from '@angular/router';
+import { coworkerDetailsRoute } from 'src/app/shared/constants';
 
+export interface SearchPattern {
+  name: string,
+  title: string
+}
 @Component({
   selector: 'app-searchpage',
   templateUrl: './searchpage.component.html',
   styleUrls: ['./searchpage.component.scss']
 })
 export class SearchPageComponent implements OnInit {
-  parties=testParties
-  fullParties=testParties
-  lastSearch=[]
-  constructor( private matDialog: MatDialog) { }
+  parties: ReplaySubject<Party[]>
+  lastSearch: ReplaySubject<SearchPattern>
+  subscriptions = []
+
+  onDetails
+  onDelete
+
+  constructor(private matDialog: MatDialog, private partyService: PartyService, private authService: AuthService,
+    private router: Router) { 
+      this.onDetails=function(p:Party) {
+        router.navigate(['/'+coworkerDetailsRoute,{id:p.id}])
+      }
+      this.onDelete=function(p: Party) {
+        console.log("deleted: ",p.id)
+      }
+
+  }
 
   ngOnInit(): void {
+    this.lastSearch = new ReplaySubject()
+    let companyPartyObservable =
+      this.authService.userObservable
+        .pipe(mergeMap(company => this.partyService.getAllForCompany(company.uid)))
+
+    this.parties = new ReplaySubject()
+    this.subscriptions.push(combineLatest([companyPartyObservable, this.lastSearch])
+      .pipe(map(array =>
+        array[0].filter(
+          element => element.fullName.toLocaleLowerCase().includes(array[1].name.toLocaleLowerCase()) &&
+            element.title.toLocaleLowerCase().includes(array[1].title.toLocaleLowerCase()))))
+            .subscribe(this.parties))
+
+    this.lastSearch.next({ name: "", title: "" })
+
+  }
+  ngOnDestroy(){
+    this.subscriptions.forEach(s=>s.unsubscribe)
   }
 
-  onDetails=function(p: Party){
-   console.log(p.formattedName,": Details")
-  }
+  
 
-  onDelete=function(p: Party){
-   console.log(p.formattedName,": Delete")
+  onSearch(terms: SearchPattern) {
+    this.lastSearch.next(terms)
   }
-
-  onSearch(terms:string[]){
-    this.lastSearch=terms
-    let matching=[]
-    for (const item of this.fullParties) {
-      if(item.fullName.toLocaleLowerCase().includes(terms[0].toLocaleLowerCase())
-      &&item.title.toLocaleLowerCase().includes(terms[1].toLocaleLowerCase()))
-      matching.push(item);
-    }
-    this.parties=matching
-  }
-  testDialog(){
-    let dRef=this.matDialog.open(NewPartyDialogComponent,{
-      height:"50%",
-      width:"50%",
+  addParty() {
+    let dRef = this.matDialog.open(NewPartyDialogComponent, {
+      height: "50%",
+      width: "50%",
     });
-    dRef.afterClosed().subscribe(result=>{
-      this.fullParties.push(result)
-      this.onSearch(this.lastSearch)
+    dRef.afterClosed().subscribe(result => {
+      this.partyService.set(result)
     })
 
   }
