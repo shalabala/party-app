@@ -3,29 +3,43 @@
 
 html,
 body {
-  height: 100%;
-}
-
-body {
-  margin: 0;
+  margin: 30px 0 50px 0;
   font-family:
     Roboto,
     "Helvetica Neue",
     sans-serif;
   background: #303030;
   color: white;
+  position: relative;
 }
 
 .topcenter {
-  margin-top: 100px;
+  //margin-top: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
   height: fit-content;
   margin-top: 2px;
 }
+.container{
+  width: 100%;
+  height: 100%;
+}
+.flex{
+  display: flex;
+  flex-wrap: wrap;
+}
 .loginRegisterCard{
   margin-top: 15px;
+}
+footer{
+  background-color: black;
+  color: white;
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  height: 50px;
+  width: 100%;
 }
 .alert {
   text-align: center;
@@ -37,14 +51,12 @@ body {
   height: fit-content;
   line-height: 20px;
 }
-.container{
-  width: 100%;
 
+.full-screen-modal .mat-dialog-container {
+  max-width: none;
 }
-.flex{
-  display: flex;
-  flex-wrap: wrap;
-}
-app-details, app-searchpage, app-login, app-register{
-  height: 95%;
+.roundButton{
+    right: 100px;
+    bottom: 100px;
+    position: fixed !important;
 }

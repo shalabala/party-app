@@ -1,5 +1,18 @@
+import { Router } from "@angular/router"
 import { Party } from "./model/party.model"
 import { PartyState } from "./model/party.state"
+
+export const onLogin=function(router: Router){
+    if (router.url.endsWith(loginRoute) || router.url.endsWith(registerRoute)) {
+      router.navigateByUrl('/' + searchRoute)
+    }
+  }
+  
+  export const onLogout=function (router: Router) {
+    if (!(router.url.endsWith(loginRoute) || router.url.endsWith(registerRoute))) {
+      router.navigateByUrl('/' + loginRoute)
+    }
+  }
 
 export const loginRoute:string="login"
 export const registerRoute:string="register"
@@ -13,7 +26,7 @@ export function unlocalizedNameFormatter(prefix: string, familyName: string, giv
 export const emptyParty:Party=
     {
         aristrocraticTitle:'',
-        birthDate:new Date(),
+        birthDate:'',
         characteristics:[],
         contactMediums:[{name:'',type:'',contact:''}],
         countryOfBirth:'',

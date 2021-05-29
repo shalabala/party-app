@@ -128,9 +128,6 @@ export class NewPartyDialogComponent implements OnInit {
     return unlocalizedNameFormatter
     //TODO could be localized
   }
-
-
-
   
   setPeferredName(preferredName, prefix, familyName, givenNames) {
     if (!preferredName.touched) {
@@ -220,7 +217,7 @@ export class NewPartyDialogComponent implements OnInit {
     let values = this.form.value
     return {
       aristrocraticTitle: values.name.namePrefix,
-      birthDate: new Date(values.birth.date),
+      birthDate: values.birth.date,
       characteristics: [""],
       contactMediums: [],
       countryOfBirth: values.birth.country,
@@ -273,6 +270,5 @@ export class NewPartyDialogComponent implements OnInit {
     }
 
   }
-
 
 }

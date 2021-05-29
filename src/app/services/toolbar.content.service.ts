@@ -17,7 +17,7 @@ export class ToolbarContentService {
     if(route.endsWith(coworkerDetailsRoute)){
       return { text: "🠔 Vissza", route: searchRoute}
     }
-    return { text: "Company personel database", route: searchRoute}
+    return { text: "Personnel DB", route: searchRoute}
 
   }
   getIfDisplayMenu(route: string): boolean{

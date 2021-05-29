@@ -1,3 +1,9 @@
 <app-party-searchbar (searchTerm)="onSearch($event)"></app-party-searchbar>
+
 <app-party-list [parties]="parties" [detailsCallback]="onDetails" [deleteCallback]="onDelete"></app-party-list>
-<button (click)="addParty()">Add party</button>
+<button color="primary" mat-fab (click)="addParty()"
+ class="roundButton">
+    <mat-icon>
+        add
+    </mat-icon>
+</button>

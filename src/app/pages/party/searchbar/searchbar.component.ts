@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { interval } from 'rxjs';
+import { debounce } from 'rxjs/operators';
+import { searchRoute } from 'src/app/shared/constants';
 import { SearchPattern } from '../searchpage/searchpage.component';
 
 @Component({
@@ -15,10 +18,20 @@ export class SearchBarComponent implements OnInit {
   })
   constructor() { }
 
+  subscriptions=[]
   ngOnInit(): void {
+    this.subscriptions.push(
+      this.searchForm.get('nameField').valueChanges.pipe(debounce(_=>interval(200)))
+      .subscribe(val=>this.search()),
+      this.searchForm.get('titleField').valueChanges.pipe(debounce(_=>interval(200)))
+      .subscribe(val=>this.search())
+    )
+  }
+  ngOnDestroy(){
+    this.subscriptions.forEach(it=>it.unsubscribe())
   }
   search(){
-    this.searchTerm.emit({title:this.searchForm.value.nameField,name:this.searchForm.value.titleField})
+    this.searchTerm.emit({name:this.searchForm.value.nameField,title:this.searchForm.value.titleField})
   }
 
 }

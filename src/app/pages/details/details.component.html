@@ -1,6 +1,9 @@
 <div class="topcenter">
   <mat-card>
-    <mat-card-title>{{party.formattedName}}</mat-card-title>
+    <mat-card-title>{{party.formattedName}}
+      <button mat-button (click)="editParty()">
+        <mat-icon>edit</mat-icon></button>
+    </mat-card-title>
     <mat-card-subtitle>{{party.title}}</mat-card-subtitle>
 
     <mat-card-content>
@@ -11,7 +14,7 @@
       <mat-label class="title">Lakcím: </mat-label>
       <mat-label class="value">{{party.location}}</mat-label><br>
       <mat-label class="title">Születés: </mat-label>
-      <mat-label class="value">{{party.birthDate | date}}, {{party.placeOfBirth}}, {{party.countryOfBirth}} </mat-label><br>
+      <mat-label class="value">{{this.party.birthDate | date}}, {{party.placeOfBirth}}, {{party.countryOfBirth}} </mat-label><br>
 
       <mat-label class="title">Nemzetiség: </mat-label>
       <mat-label class="value">{{party.nationality}}</mat-label><br>
@@ -55,5 +58,5 @@
     </mat-card-content>
 
   </mat-card>
-  <button (click)="editParty()">Edit</button>
+  
 </div>

@@ -1,5 +1,25 @@
-mat-label, input{
+.searchLabel{
+    margin-right:35px;
+    font-size: large;
+    width: fit-content;
+}
+
+.fieldLabel{
     font-size: medium;
-    margin-right: 5px;
+    width: fit-content;
+}
+form{
+    width: 100%
+}
+.searchInput{
+    margin-right: 0px;
+    margin-left: auto;
+    width: 25%;
+    max-width: 250px;
     
+}
+mat-toolbar{
+    min-width: none;
+    margin: 0;
+    width: 100vh;
 }

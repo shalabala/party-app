@@ -1,24 +1,22 @@
-
 <div class="topcenter">
-    <mat-card class="loginRegisterCard" color="primary">
-      <form [formGroup]="form" (ngSubmit)="login()">
-        <h3>Bejelentkezés</h3>
-        <div id="alertCard" class="alert" *ngIf="alertMessage">
-          {{alertMessage}}
-        </div>
-        <mat-form-field>
-          <mat-label>E-mail</mat-label>
-          <input type="email" name="email" matInput placeholder="Pl. pat@example.com" formControlName="email">
-        </mat-form-field><br>
-        <mat-form-field >
-          <mat-label>Jelszó</mat-label>
-          <input type="password" name="password" matInput minlength="6" placeholder="Jelszó" formControlName="password">
-        </mat-form-field>
-        <br>
-       <button mat-button  (click)="navToRegister()">Regisztráció</button>
-        
-        <button type="submit" mat-button
-          [disabled]="form.invalid">Bejelentkezés</button>
-      </form>
-    </mat-card>
-  </div>
+  <mat-card class="loginRegisterCard" color="primary">
+    <form [formGroup]="form">
+      <h3>Bejelentkezés</h3>
+      <div id="alertCard" class="alert" *ngIf="alertMessage">
+        {{alertMessage}}
+      </div>
+      <mat-form-field>
+        <mat-label>E-mail</mat-label>
+        <input type="email" name="email" matInput placeholder="Pl. pat@example.com" formControlName="email">
+      </mat-form-field><br>
+      <mat-form-field>
+        <mat-label>Jelszó</mat-label>
+        <input type="password" name="password" matInput minlength="6" placeholder="Jelszó" formControlName="password">
+      </mat-form-field>
+      <br>
+      <button type="button" mat-button [disabled]="form.invalid" (click)="login()">Bejelentkezés</button>
+
+      <button mat-button (click)="navToRegister()">Regisztráció</button>
+    </form>
+  </mat-card>
+</div>

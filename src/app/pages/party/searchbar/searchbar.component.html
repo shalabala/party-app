@@ -1,17 +1,19 @@
 <mat-toolbar>
   <mat-toolbar-row>
+    <mat-label class="searchLabel">
+      Keresés:
+    </mat-label>
     <form [formGroup]="searchForm" (ngSubmit)="search()" >
-        <mat-label>Név: </mat-label>
+        <mat-label class="fieldLabel">Név: </mat-label>
 
-      <mat-form-field>
+      <mat-form-field class="searchInput">
         <input matInput formControlName="nameField">
       </mat-form-field>
-      <mat-label>Beosztás: </mat-label>
+      <mat-label class="fieldLabel">Beosztás: </mat-label>
 
-      <mat-form-field>
+      <mat-form-field class="searchInput">
       <input matInput formControlName="titleField">
     </mat-form-field>
-      <button type="submit"  (click)="search()" mat-button>Keres</button>
 
     </form>
   </mat-toolbar-row>

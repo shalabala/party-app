@@ -1,5 +1,28 @@
 .partyCard{
    min-width: fit-content;
-   width: max-content;
+   height: fit-content;
    margin: 5px;
+   width: 94%;
+   margin-left: 3%;
+   margin-right: 3%;
+}
+
+img {
+   width: 80%;
+   height: auto;
+   margin-left: 10%;
+   margin-right: 10%;
+}
+
+@media only screen and (min-width: 768px) {
+   .partyCard{
+      width: 300px;
+      height: fit-content;
+      margin: 5px;
+   }
+   img {
+      width: 250px;
+      height: auto;
+      margin: auto;
+  }
 }

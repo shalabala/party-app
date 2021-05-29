@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { loginRoute,  registerRoute, searchRoute } from '../shared/constants';
+import { loginRoute, onLogin, onLogout, registerRoute, searchRoute } from '../shared/constants';
 import { User } from '../shared/model/user.model';
 
 
@@ -10,21 +10,17 @@ import { User } from '../shared/model/user.model';
 })
 export class AuthService {
   constructor(private fireAuth: AngularFireAuth, private router: Router) {
-    
+
     fireAuth.onAuthStateChanged((user) => {
       if (user) {
         this._user = {
           userId: user.uid,
           email: user.email
         }
-        if (router.url.endsWith(loginRoute) || router.url.endsWith(registerRoute)) {
-          router.navigateByUrl('/' + searchRoute)
-        }
+        onLogin(this.router)
       } else {
-        this._user = null
-        if (!(router.url.endsWith(loginRoute) || router.url.endsWith(registerRoute))) {
-          router.navigateByUrl('/' + loginRoute)
-        }
+       // this._user = null
+        onLogout(this.router)
       }
     })
   }
@@ -34,15 +30,13 @@ export class AuthService {
   public get user() {
     return this._user
   }
-  public get userObservable(){
+  public get userObservable() {
     return this.fireAuth.user
   }
-
-  checkIfPageAuthorized() {
-    if (!(this.router.url.endsWith(loginRoute) || this.router.url.endsWith(registerRoute)) && this.user == null) {
-      this.router.navigateByUrl('/' + loginRoute)
-    }
+  public get currentUser(){
+    return this.fireAuth.currentUser
   }
+
 
   login(email: string, password: string) {
     return this.fireAuth.signInWithEmailAndPassword(email, password)

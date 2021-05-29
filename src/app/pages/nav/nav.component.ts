@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToolbarContentService } from 'src/app/services/toolbar.content.service';
-import { loginRoute } from 'src/app/shared/constants';
 import { ToolbarButtonDescription } from 'src/app/shared/model/toolbar.button.description';
 
 @Component({
@@ -11,6 +10,8 @@ import { ToolbarButtonDescription } from 'src/app/shared/model/toolbar.button.de
   styleUrls: ['./nav.component.scss']
 })
 export class NavComponent implements OnInit {
+
+
   get categories():ToolbarButtonDescription[]{
     return this.toolbarContent.getButtonDescriptors(this.router.url)
   }
@@ -21,7 +22,7 @@ export class NavComponent implements OnInit {
     return this.toolbarContent.getIfDisplayMenu(this.router.url)
   }
   get menuName(){
-    return "Menu"//TODO
+    return "Menu"
   }
   constructor(private toolbarContent: ToolbarContentService, private router : Router, private authService: AuthService) { }
 

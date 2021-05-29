@@ -4,11 +4,12 @@ import { NewPartyDialogComponent } from 'src/app/modal/new-party-dialog/new-part
 import { AuthService } from 'src/app/services/auth.service';
 import { PartyService } from 'src/app/services/party.service';
 import { Party } from 'src/app/shared/model/party.model';
-import { last, map, mergeMap } from 'rxjs/operators';
+import { flatMap, last, map, mergeMap } from 'rxjs/operators';
 import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
 import { combineLatest } from 'rxjs';
 import { Router } from '@angular/router';
 import { coworkerDetailsRoute } from 'src/app/shared/constants';
+import { Meta } from '@angular/platform-browser';
 
 export interface SearchPattern {
   name: string,
@@ -28,22 +29,21 @@ export class SearchPageComponent implements OnInit {
   onDelete
 
   constructor(private matDialog: MatDialog, private partyService: PartyService, private authService: AuthService,
-    private router: Router) { 
+    private router: Router, private meta :Meta) {
+      meta.addTag({name:"viewport", content:"width=device-width, initial-scale=1" })
       this.onDetails=function(p:Party) {
         router.navigate(['/'+coworkerDetailsRoute,{id:p.id}])
       }
       this.onDelete=function(p: Party) {
-        console.log("deleted: ",p.id)
+        partyService.delete(p).catch(err=>console.log('deletion failed', err))
       }
 
   }
 
   ngOnInit(): void {
     this.lastSearch = new ReplaySubject()
-    let companyPartyObservable =
-      this.authService.userObservable
-        .pipe(mergeMap(company => this.partyService.getAllForCompany(company.uid)))
-
+    let companyPartyObservable =this.authService.userObservable.pipe(
+      flatMap(it=> this.partyService.getAllForCompany(this.authService.user.userId)))
     this.parties = new ReplaySubject()
     this.subscriptions.push(combineLatest([companyPartyObservable, this.lastSearch])
       .pipe(map(array =>
@@ -56,7 +56,7 @@ export class SearchPageComponent implements OnInit {
 
   }
   ngOnDestroy(){
-    this.subscriptions.forEach(s=>s.unsubscribe)
+    this.subscriptions.forEach(s=>s.unsubscribe())
   }
 
   
@@ -66,11 +66,17 @@ export class SearchPageComponent implements OnInit {
   }
   addParty() {
     let dRef = this.matDialog.open(NewPartyDialogComponent, {
-      height: "50%",
-      width: "50%",
+      height: "95%",
+      width: "95%",
     });
     dRef.afterClosed().subscribe(result => {
       this.partyService.set(result)
+      .then(
+        ()=>console.log("Update success")
+        )
+      .catch(
+        it=>console.log("Update failed: ",it)
+        )
     })
 
   }

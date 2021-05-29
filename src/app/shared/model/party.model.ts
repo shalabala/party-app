@@ -7,9 +7,9 @@ export interface Party{
     id: string,
     href: string, //company id
     aristrocraticTitle: string,
-    birthDate: Date,
+    birthDate: String,
     countryOfBirth: string,
-    deathDate?: Date,
+    deathDate?: String,
     familyName: string,
     formattedName: string,//display name
     fullName: string,

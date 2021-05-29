@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
+import { flatMap, switchMap } from 'rxjs/operators';
 import { NewPartyDialogComponent } from 'src/app/modal/new-party-dialog/new-party-dialog.component';
 import { PartyService } from 'src/app/services/party.service';
 import { Party } from 'src/app/shared/model/party.model';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-details',
@@ -17,30 +18,34 @@ export class DetailsComponent implements OnInit {
   constructor(private matDialog: MatDialog, private route: ActivatedRoute, private partyService: PartyService) { }
 
   party:Party
-
   subscriptions=[]
-
   ngOnInit(): void {
-    this.subscriptions.push(this.route.paramMap
-      .pipe(switchMap(params =>
+    this.subscriptions.push(
+      this.route.paramMap
+      .pipe(flatMap(params =>
         this.partyService.getById(params.get('id'))
-      )).subscribe(value=>this.party=value))
+      )).subscribe(p=>this.party=p)
+      )
   }
-
   ngOnDestroy(){
-    this.subscriptions.forEach(s=>s.unsubscribe)
+    this.subscriptions.forEach(it=>it.unsubscribe())
   }
 
   editParty(){
     let dRef = this.matDialog.open(NewPartyDialogComponent, {
-      height: "50%",
-      width: "50%",
+      height: "95%",
+      width: "95%",
       data:{
         party:this.party
       }
     });
     dRef.afterClosed().subscribe(result => {
-      this.partyService.update(result)
+      this.partyService.set(result).then(
+        ()=>console.log("Update success")
+        )
+      .catch(
+        it=>console.log("Update failed: ",it)
+        )
     })
   }
 

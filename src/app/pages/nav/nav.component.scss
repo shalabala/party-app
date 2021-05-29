@@ -12,8 +12,8 @@ a[mat-button] {
 }
 
 mat-toolbar {
-  position: sticky;
-  position: -webkit-sticky;
+  position: fixed;
+  width: 100%;
   top: 0;
   z-index: 1000;
 }
